@@ -1,23 +1,26 @@
 import express from "express";
 import path from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { ENV } from "../config/env.js";
 
 const app = express();
-const PORT = process.env.PORT || 5001;
+const __dirname = path.resolve();
 
-// Serve React frontend
-app.use(express.static(path.join(__dirname, "admin-build")));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "admin-build", "index.html"));
+// API routes
+app.get("/api/health", (req, res) => {
+  res.status(200).json({ message: "server is up and running" });
 });
 
-// Your API routes
-app.get("/api/test", (req, res) => {
-  res.json({ message: "API is working!" });
-});
+// Serve React frontend in production
+if (ENV.NODE_ENV === "production") {
+  const frontendPath = path.join(__dirname, "admin-build");
+  app.use(express.static(frontendPath));
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  // SPA fallback (Express 5 syntax)
+  app.get("/*", (req, res) => {
+    res.sendFile(path.join(frontendPath, "index.html"));
+  });
+}
+
+app.listen(ENV.PORT || 5001, () => {
+  console.log(`Server running on port ${ENV.PORT || 5001}`);
+});
