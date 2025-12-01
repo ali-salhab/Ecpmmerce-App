@@ -1,0 +1,14 @@
+{
+  "name": "ecpmmerce-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm install --prefix backend && npm install --prefix backend && npm run build --prefix backend "
+, "start":"npm run start --perfix backend"
+ 
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
