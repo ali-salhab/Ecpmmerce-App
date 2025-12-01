@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon src/server.js",
-    "start":"node src/server.js"
+    "start": "node src/server.js"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +15,7 @@
     "cloudinary": "^2.8.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
+    "ecpmmerce-app": "file:..",
     "express": "^5.1.0",
     "mongoose": "^9.0.0",
     "multer": "^2.0.2",
