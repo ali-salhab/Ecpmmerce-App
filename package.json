@@ -7,7 +7,7 @@
   },
   "scripts": {
     "build": "npm install --prefix backend && npm install --prefix admin && npm run build --prefix admin "
-, "start":"npm run start --perfix backend"
+, "start":"npm run start --prefix backend"
  
   },
   "keywords": [],
