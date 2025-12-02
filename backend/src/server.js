@@ -23,7 +23,11 @@ if (ENV.NODE_ENV === "production") {
   });
 }
 
-app.listen(ENV.PORT || 5001, () => {
-  console.log(`📎📎📎📎📎Server running on port ${ENV.PORT || 5001}`);
-  connectDB();
-});
+const startServer = async () => {
+  await connectDB();
+  app.listen(ENV.PORT || 5001, () => {
+    console.log(`📎📎📎📎📎Server running on port ${ENV.PORT || 5001}`);
+    connectDB();
+  });
+};
+startServer();
