@@ -18,6 +18,7 @@
     "dotenv": "^17.2.3",
     "ecpmmerce-app": "file:..",
     "express": "^5.1.0",
+    "inngest": "^3.46.0",
     "mongoose": "^9.0.0",
     "multer": "^2.0.2",
     "svix": "^1.81.0"
