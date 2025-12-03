@@ -1,6 +1,16 @@
 import { Router } from "express";
-import { createProduct } from "../controllers/admin.controller";
+import {
+  createProduct,
+  getAllProducts,
+  updateProduct,
+} from "../controllers/admin.controller.js";
+
+import { protectRoute, adminOnly } from "../middleware/auth.middleware.js";
 const router = Router();
 
-router.post("/products", protectRoute, adminOnly, createProduct);
+// optimization --> DRY
+router.use(protectRoute, adminOnly);
+router.post("/products", createProduct);
+router.get("/products", getAllProducts);
+router.get("/products/:id", updateProduct);
 export default router;
