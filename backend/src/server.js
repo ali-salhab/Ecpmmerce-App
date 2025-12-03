@@ -4,6 +4,7 @@ import { ENV } from "../config/env.js";
 import { connectDB } from "../config/db.js";
 import { clerkMiddleware } from "@clerk/express";
 import { serve } from "inngest/express";
+import adminRoutes from "../routes/admin.routes.js";
 import { functions, inngest } from "../config/inngest.js";
 const app = express();
 const __dirname = path.resolve();
@@ -24,17 +25,21 @@ app.get("/api/health", (req, res) => {
 
 // Serve React frontend in production
 if (ENV.NODE_ENV === "production") {
-  const frontendPath = path.join(__dirname, "admin-build");
+  console.log("we are in production state ");
+  const frontendPath = path.join(__dirname, "../admin/dist");
+  // console.log(frontendPath);
   app.use(express.static(frontendPath));
-
+  app.use("api/admin", adminRoutes);
   // SPA fallback for Express 5
+  // console.log(path.join(__dirname, "../admin", "dist", "index.html"));
   app.get("/{*any}", (req, res) => {
-    res.sendFile(path.join(frontendPath, "index.html"));
+    // this work correctly
+    res.sendFile(path.join(__dirname, "../admin", "dist", "index.html"));
   });
 }
 
 const startServer = async () => {
-  await connectDB();
+  // await connectDB();
   app.listen(ENV.PORT || 5001, () => {
     console.log(`📎📎📎📎📎Server running on port ${ENV.PORT || 5001}`);
     connectDB();
