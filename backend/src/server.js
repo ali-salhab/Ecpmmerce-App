@@ -7,6 +7,8 @@ import { serve } from "inngest/express";
 import adminRoutes from "../routes/admin.routes.js";
 import userRoutes from "../routes/user.routes.js";
 import { functions, inngest } from "../config/inngest.js";
+
+import orderRoutes from "../routes/order.routes.js";
 const app = express();
 const __dirname = path.resolve();
 app.use(express.json());
@@ -32,7 +34,8 @@ if (ENV.NODE_ENV === "production") {
   app.use(express.static(frontendPath));
 
   app.use("/api/admin", adminRoutes);
-  app.use("/api/user", userRoutes);
+  app.use("/api/users", userRoutes);
+  app.use("/api/orders", orderRoutes);
 
   // SPA fallback for Express 5
   // console.log(path.join(__dirname, "../admin", "dist", "index.html"));
