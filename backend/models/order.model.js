@@ -1,6 +1,6 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 
-const shippingAddressSChema = new mongoose({
+const shippingAddressSChema = new mongoose.Schema({
   fullName: {
     type: String,
     require: true,
@@ -82,7 +82,11 @@ const orderSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    clerkId: {},
+    clerkId: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     orderItems: {
       orderItemSchema,
     },

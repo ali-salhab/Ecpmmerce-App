@@ -12,4 +12,16 @@ const fileFilter = (req, file, cb) => {
     path.extname(path.extname(file.originalname).toLocaleLowerCase())
   );
   const mimeType = allowedTypes.test(file.mimeType);
+
+  if (extname && mimeType) {
+    cb(null, true);
+  } else {
+    cb(new Error("only images allowed jpg jpeg "));
+  }
 };
+
+export const upload = multer({
+  storage,
+  fileFilter,
+  limits: { fileSize: 5 * 1024 * 1024 },
+});
