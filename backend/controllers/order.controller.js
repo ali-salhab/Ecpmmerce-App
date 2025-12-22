@@ -46,6 +46,7 @@ export async function createOrder(req, res) {
     return res.status(500).json({ message: error.message });
   }
 }
+
 export async function getUserOrders(req, res) {
   try {
     const orders = await Order.find({ clerkId: req.user.clerkId })
