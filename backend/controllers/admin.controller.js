@@ -23,6 +23,7 @@ export async function createProduct(req, res) {
         message: "Maximum 3 images allowed",
       });
     }
+
     const uploadPromisses = req.files.map((file) => {
       return cloudinary.uploader.upload(file.path, {
         folder: "products",
@@ -45,13 +46,11 @@ export async function createProduct(req, res) {
   } catch (error) {
     console.log("Error in creating product");
     res.status(500).json({
-      // TO-DO
-
       message: "Failed to create Product",
     });
   }
 }
-export async function getAllProducts(req, res) {
+export async function getAllProducts(_, res) {
   try {
     // -1 desc order
     const products = await Product.find().sort({ createdAt: -1 });
@@ -63,7 +62,46 @@ export async function getAllProducts(req, res) {
     });
   }
 }
-export async function updateProduct() {}
+export async function updateProduct(req, res) {
+  try {
+    const { productId } = req.params;
+    const { name, description, price, stock, category } = req.body;
+    const product = await Product.findOne({ _id: productId });
+    if (!product) {
+      return res.status(404).json({
+        message: "Product not found",
+      });
+    }
+    if (name) product.name = name;
+    if (description) product.description = description;
+    if (price) product.price = parseFloat(price);
+    if (stock !== undefined) product.stock = parseInt(stock);
+    if (category) product.category = category;
+
+    // handle image update if new images are uploaded
+    if (req.files && req.files.length > 0) {
+      if (req.files.length > 3) {
+        return res.status(400).json({
+          message: "Maximum  3 images allowed ",
+        });
+      }
+      const uploadPromises = req.files.map((file) => {
+        return cloudinary.uploader.upload(file.path, {
+          folder: "products",
+        });
+      });
+      const uploadResults = await Promise.all(uploadPromises);
+      product.images = uploadResults.map((res) => res.secure_url);
+      await product.save();
+      return res.status(200).json(product);
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "internal server error",
+    });
+  }
+}
 export async function deleteProduct(req, res) {
   try {
     const { productId } = req.params;
@@ -124,7 +162,7 @@ export async function getAllOrders() {
         message: "No Orders Found",
       });
     }
-    return orders;
+    return res.status(200).json(orders);
   } catch (error) {
     console.log("Error fetching orders:", error);
     return res.status(500).json({
@@ -140,7 +178,7 @@ export async function updateOrderStatus(req, res) {
     if (!["pending", "shipped", "delivered"].includes(status)) {
       return res.status(400).json({
         message:
-          "Invalid status. Allowed values are 'pending', 'processing', 'shipped', and 'delivered'.",
+          "Invalid status. Allowed values are 'pending', 'shipped', and 'delivered'.",
       });
     }
 

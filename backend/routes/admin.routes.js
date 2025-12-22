@@ -22,7 +22,7 @@ router.get("/products", getAllProducts);
 router.get("/products/:id", upload.array("images", 3), updateProduct);
 
 // orders routes
-// Done by me
+
 router.get("/orders", getAllOrders);
 router.patch("/orders/:orderId/status", updateOrderStatus);
 
@@ -31,5 +31,6 @@ router.patch("/orders/:orderId/status", updateOrderStatus);
 router.get("/customers", getAllCustomers);
 // TODO: delete customer
 router.delete("/customers/:customerId", deleteCustomer);
+
 router.get("/stats", getDashboradStats);
 export default router;
