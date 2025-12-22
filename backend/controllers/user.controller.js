@@ -28,6 +28,8 @@ export async function addAddress(req, res) {
         address.isDefault = false;
       });
     }
+
+    // we pass new object to the address array and it will be saved automatically
     user.addAddress.push({
       label,
       fullName,
@@ -160,7 +162,7 @@ export async function getWishlist(req, res) {
     const wishlist = await User.findById(req.user._id).populate("wishlist");
 
     res.status(200).json({
-      whishlist,
+      wishlist,
     });
 
     res.status(200).json({ wishlist });
