@@ -55,13 +55,9 @@ export async function getUserOrders(req, res) {
       .sort({ createdAt: -1 });
 
     //   check if the order has been reviewed
-    const ordeIds = orders.map((order) => order._id);
-    const reviews = await Review.find({ orderId: { $in: ordeIds } });
+    const orderIds = orders.map((order) => order._id);
+    const reviews = await Review.find({ orderId: { $in: orderIds } });
     const revieworderids = reviews.map((review) => review.orderId.toString());
-    console.log(revieworderids);
-    console.log(ordeIds);
-    console.log(reviews);
-    console.log(orders);
 
     const ordersWithReviews = await Promise.all(
       orders.map(async (order) => {

@@ -6,6 +6,6 @@ import { getProductbyId } from "../controllers/product.controller.js";
 const router = Router();
 
 router.get("/", protectRoute, getAllProducts);
-router.post("/:id", protectRoute, getProductbyId);
+router.get("/:id", protectRoute, getProductbyId);
 
 export default router;

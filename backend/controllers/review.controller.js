@@ -46,14 +46,20 @@ export const createReview = async (req, res) => {
     if (existingReview) {
       return res.status(400).json({ message: "Review already exists" });
     }
+    const review = await Review.create({
+      userId: user._id,
+      productId,
+      orderId,
+      rating,
+    });
 
-    const product = await Product.findById(productIdproduct);
     const reviews = await Review.find({ productId });
     const totalRating = reviews.reduce((acc, item) => acc + item.rating, 0);
-    product.averageRating = totalRating / reviews.length;
-    product.totalReviews = reviews.length;
-    await product.save();
 
+    await Product.findByIdAndUpdate(productId, {
+      averageRating: totalRating / reviews.length,
+      totalReviews: reviews.length,
+    });
     res.status(201).json({
       message: "Review created successfully",
       review: review,
@@ -72,6 +78,9 @@ export const deleteReview = async (req, res) => {
       _id: reviewId,
     });
 
+    if (!review) {
+      return res.status(404).json({ message: "Review not found" });
+    }
     // check if the review belongs to the user
     if (review.userId.toString() !== user._id.toString()) {
       return res
@@ -80,7 +89,6 @@ export const deleteReview = async (req, res) => {
     }
 
     const productId = review.productId;
-    const product = Product.findById(productId);
     await Review.findByIdAndDelete(reviewId);
     // update average rating of the product
     const reviews = await Review.find({ productId });
