@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { protectRoute } from "../middleware/auth.middleware";
-import router from "./admin.routes";
+
 import {
   getCart,
   addToCart,
@@ -8,6 +8,9 @@ import {
   removeFromCart,
   clearCart,
 } from "../controllers/cart.controller.js";
+
+router.use(protectRoute);
+
 // Mock cart controller functions
 router.get("/", getCart);
 router.post("/", addToCart);

@@ -2,7 +2,7 @@ import { Cart } from "../models/cart.model.js";
 import { Product } from "../models/product.model.js";
 export async function getCart(req, res) {
   try {
-    const cart = await Cart.findOne({ clerkId: req.user.clerkId }).populate(
+    let cart = await Cart.findOne({ clerkId: req.user.clerkId }).populate(
       "items.product"
     );
     if (!cart) {
