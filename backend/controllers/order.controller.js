@@ -55,10 +55,18 @@ export async function getUserOrders(req, res) {
       .sort({ createdAt: -1 });
 
     //   check if the order has been reviewed
+    const orderIds = orders.map((order) => order._id);
+    const reviews = await Review.find({ orderId: { $in: orderIds } });
+    const revieworderids = reviews.map((review) => review.orderId.toString());
+
     const ordersWithReviews = await Promise.all(
       orders.map(async (order) => {
         const review = await Review.findOne({ orderId: order._id });
-        return { ...order.toObject(), hasReviewed: !!review };
+        return {
+          ...order.toObject(),
+          hasReviewed: revieworderids.has(order._id.toString()),
+        };
+        // !! double negation to convert to boolean
       })
     );
     res.status(200).json({
