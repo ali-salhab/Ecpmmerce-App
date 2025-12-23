@@ -10,12 +10,15 @@ import { functions, inngest } from "../config/inngest.js";
 import productRoutes from "../routes/product.routes.js";
 import reviewRoutes from "../routes/review.routes.js";
 import orderRoutes from "../routes/order.routes.js";
-
+import cartRoutes from "../routes/cart.routes.js";
+import cors from "cors";
 const app = express();
 const __dirname = path.resolve();
 app.use(express.json());
 app.use(clerkMiddleware());
 
+// CREDENTIALS TRUE MEAN THAT WE ALLOW COOKIES TO BE SENT ALONG WITH REQUESTS
+app.use(cors({ origin: ENV.CLIENT_URL, credentials: true }));
 app.use(
   "/api/inngest",
   serve({
@@ -40,6 +43,7 @@ if (ENV.NODE_ENV === "production") {
   app.use("/api/orders", orderRoutes);
   app.use("/api/reviews", reviewRoutes);
   app.use("/api/products", productRoutes);
+  app.use("/api/cart", cartRoutes);
 
   // SPA fallback for Express 5
   // console.log(path.join(__dirname, "../admin", "dist", "index.html"));
