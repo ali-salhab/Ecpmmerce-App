@@ -3,6 +3,7 @@ import cloudinary from "../config/cloudinary.js";
 import { Order } from "../models/order.model.js";
 import { User } from "../models/user.model.js";
 export async function createProduct(req, res) {
+  console.log("create prodct function");
   try {
     const { name, description, price, stock, category } = req.body;
     if (!name || !description || !price || !stock || !category) {
@@ -149,20 +150,25 @@ export async function deleteProduct(req, res) {
   }
 }
 
-export async function getAllOrders() {
+export async function getAllOrders(_, res) {
   try {
+    console.log("getAllOrders controller function");
     // -1 desc order
     const orders = await Order.find()
       .populate("user", "name email")
       .populate("orderItems.product")
       .sort({ createdAt: -1 });
 
-    if (!orders) {
+    if (orders.length === 0) {
       return res.status(404).json({
         message: "No Orders Found",
+        orders: [],
       });
     }
-    return res.status(200).json(orders);
+    return res.status(200).json({
+      message: "Orders fetched successfully",
+      orders,
+    });
   } catch (error) {
     console.log("Error fetching orders:", error);
     return res.status(500).json({
@@ -230,10 +236,24 @@ export async function getAllCustomers(_, res) {
 
 export async function getDashboradStats(_, res) {
   try {
+    console.log("get dashboard stats functions");
     const totalUsersCount = await User.countDocuments();
     const totalOrdersCount = await Order.countDocuments();
     const totalProductsCount = await Product.countDocuments();
-
+    const totalRevenue = await Order.aggregate([
+      {
+        $match: { status: "delivered" },
+      },
+      {
+        $group: {
+          _id: null,
+          totalRevenue: { $sum: "$totalPrice" },
+        },
+      },
+    ]);
+    console.log("total revenue ");
+    console.log(totalRevenue);
+    // const totalCategoriesCount = await Product.distinct("category").countDocuments();
     // totla prices
     const totalSales = await Order.aggregate([
       {
@@ -259,6 +279,7 @@ export async function getDashboradStats(_, res) {
       totalUsersCount,
       totalOrdersCount,
       totalProductsCount,
+      totalRevenue,
       // totalCategoriesCount,
       totalSales,
     });

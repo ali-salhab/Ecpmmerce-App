@@ -13,6 +13,7 @@
     "@clerk/clerk-react": "^5.57.0",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-query": "^5.90.12",
+    "axios": "^1.13.2",
     "ecpmmerce-app": "file:..",
     "lucide-react": "^0.562.0",
     "react": "^19.2.0",
