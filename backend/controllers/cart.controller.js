@@ -1,5 +1,5 @@
 import { Cart } from "../models/cart.model.js";
-import { Product } from "../models/product.model.js";
+import { Product } from "../models/product.models.js";
 export async function getCart(req, res) {
   try {
     let cart = await Cart.findOne({ clerkId: req.user.clerkId }).populate(

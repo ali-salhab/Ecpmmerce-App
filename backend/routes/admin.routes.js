@@ -16,7 +16,7 @@ const router = Router();
 // optimization --> DRY
 
 // product routes
-router.use(protectRoute, adminOnly);
+// router.use(protectRoute, adminOnly);
 router.post("/products", upload.array("images", 3), createProduct);
 router.get("/products", getAllProducts);
 router.get("/products/:id", upload.array("images", 3), updateProduct);
