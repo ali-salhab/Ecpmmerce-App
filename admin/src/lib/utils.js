@@ -20,18 +20,18 @@ export const getStockStatusBadge = (stock) => {
   if (stock === 0) {
     return {
       text: "Out of Stock",
-      badge: "badge-error",
+      class: "badge-error",
     };
   }
   if (stock < 5) {
     return {
       text: "Low Stock",
-      badge: "badge-warning",
+      class: "badge-warning",
     };
   } else {
     return {
       text: "In Stock",
-      badge: "badge-success",
+      class: "badge-success",
     };
   }
 };

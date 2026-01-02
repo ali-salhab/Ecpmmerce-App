@@ -8,6 +8,7 @@ import {
   getDashboradStats,
   getAllCustomers,
   deleteCustomer,
+  deleteProduct,
 } from "../controllers/admin.controller.js";
 import { upload } from "../middleware/multer.middleware.js";
 import { protectRoute, adminOnly } from "../middleware/auth.middleware.js";
@@ -19,6 +20,7 @@ const router = Router();
 // router.use(protectRoute, adminOnly);
 router.post("/products", upload.array("images", 3), createProduct);
 router.get("/products", getAllProducts);
+router.delete("/products/:id", deleteProduct);
 router.get("/products/:id", upload.array("images", 3), updateProduct);
 
 // orders routes
