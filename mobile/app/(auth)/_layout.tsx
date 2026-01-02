@@ -7,5 +7,11 @@ export default function AuthRoutesLayout() {
     // If the user is signed in, redirect to the main app
     return <Redirect href={"/"} />;
   }
-  return <Stack />;
+  return (
+    <Stack
+      screenOptions={{
+        headerShown: false,
+      }}
+    />
+  );
 }
