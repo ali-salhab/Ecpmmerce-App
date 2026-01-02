@@ -20,6 +20,9 @@ function OrdersPage() {
       queryClient.invalidateQueries({ queryKey: ["orders"] });
       queryClient.invalidateQueries({ queryKey: ["dashboardStats"] });
     },
+    onError: () => {
+      console.log("object");
+    },
   });
   const handlsStatusChange = (orderId, newStatus) => {
     updateStatusMutation.mutate({ orderId, status: newStatus });
