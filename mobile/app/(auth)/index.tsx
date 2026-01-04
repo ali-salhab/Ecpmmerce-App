@@ -12,12 +12,24 @@ const AuthScreen = () => {
   return (
     <View className="flex-1 justify-center items-center bg-white">
       {/* Logo */}
+      <View className="mb-8 items-center">
+        <Text
+          className="mt-4"
+          style={{
+            fontFamily: "Montserrat-Bold", // Use a custom font loaded in your project
+            fontSize: 32,
+            color: "#1e293b",
+            letterSpacing: 2,
+          }}
+        >
+          eva Shop
+        </Text>
+      </View>
       <Image
         source={require("../../assets/images/auth-image.png")}
         resizeMode="contain"
         className="size-96"
       />
-      {/* flex by def */}
       <View className="gap-2 mt-4">
         {/* Google button */}
         <TouchableOpacity
@@ -82,7 +94,7 @@ const AuthScreen = () => {
       </View>
 
       <Text className="text-center text-gray-500 leading-4 mt-6 px-2">
-        By Signup you agree to our{" "}
+        By Signup you agree to our
         <Text className="text-blue-500">
           Terms & Conditions and Privacy Policy
         </Text>
