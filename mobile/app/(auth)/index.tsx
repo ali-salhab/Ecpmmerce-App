@@ -8,7 +8,7 @@ import {
 } from "react-native";
 
 const AuthScreen = () => {
-  const { isloading, handleSocialAuth } = useSocialAuth();
+  const { loadingStrategy, handleSocialAuth } = useSocialAuth();
   return (
     <View className="flex-1 justify-center items-center bg-white">
       {/* Logo */}
@@ -36,7 +36,7 @@ const AuthScreen = () => {
           onPress={() => {
             handleSocialAuth("oauth_google");
           }}
-          disabled={isloading}
+          disabled={loadingStrategy !== null}
           style={{
             shadowOffset: { width: 0, height: 2 },
             shadowColor: "#000",
@@ -48,7 +48,7 @@ const AuthScreen = () => {
           }}
           className="flex-row py-2 items-center justify-center border border-gray-300 rounded-full px-6"
         >
-          {isloading ? (
+          {loadingStrategy === "oauth_google" ? (
             <ActivityIndicator size={"small"} color={"#4285f4"} />
           ) : (
             <View className="flex-row items-center justify-center">
@@ -65,7 +65,7 @@ const AuthScreen = () => {
           onPress={() => {
             handleSocialAuth("oauth_apple");
           }}
-          disabled={isloading}
+          disabled={loadingStrategy !== null}
           style={{
             shadowOffset: { width: 0, height: 2 },
             shadowColor: "#000",
@@ -77,7 +77,7 @@ const AuthScreen = () => {
           }}
           className="flex-row py-2 items-center justify-center border border-gray-300 rounded-full px-6"
         >
-          {isloading ? (
+          {loadingStrategy === "oauth_apple" ? (
             <ActivityIndicator size={"small"} color={"#4285f4"} />
           ) : (
             <View className="flex-row items-center justify-center">

@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@clerk/clerk-expo": "^2.19.14",
-    "@expo-google-fonts/montserrat": "^0.3.7",
+    "@expo-google-fonts/montserrat": "^0.4.2",
     "@expo/vector-icons": "^15.0.3",
     "@react-navigation/bottom-tabs": "^7.4.0",
     "@react-navigation/elements": "^2.6.3",

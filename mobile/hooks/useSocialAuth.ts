@@ -3,10 +3,10 @@ import { use, useState } from "react";
 import { Alert } from "react-native";
 
 function useSocialAuth() {
-  const [isloading, setIsLoading] = useState(false);
+  const [loadingStrategy, setIsLoadingStrategy] = useState<string | null>(null);
   const { startSSOFlow } = useSSO();
   const handleSocialAuth = async (strategy: "oauth_google" | "oauth_apple") => {
-    setIsLoading(true);
+    setIsLoadingStrategy(strategy);
     try {
       const { createdSessionId, setActive } = await startSSOFlow({ strategy });
       if (createdSessionId && setActive) {
@@ -21,11 +21,11 @@ function useSocialAuth() {
 
       console.log("error", error);
     } finally {
-      setIsLoading(false);
+      setIsLoadingStrategy(null);
     }
   };
 
-  return { isloading, handleSocialAuth };
+  return { loadingStrategy, handleSocialAuth };
 }
 
 export default useSocialAuth;
