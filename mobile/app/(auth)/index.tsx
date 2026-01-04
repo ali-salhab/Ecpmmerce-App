@@ -8,23 +8,35 @@ import {
 } from "react-native";
 
 const AuthScreen = () => {
-  const { isloading, handleSocialAuth } = useSocialAuth();
+  const { loadingStrategy, handleSocialAuth } = useSocialAuth();
   return (
     <View className="flex-1 justify-center items-center bg-white">
       {/* Logo */}
+      <View className="mb-8 items-center">
+        <Text
+          className="mt-4"
+          style={{
+            fontFamily: "Montserrat-Bold", // Use a custom font loaded in your project
+            fontSize: 32,
+            color: "#1e293b",
+            letterSpacing: 2,
+          }}
+        >
+          eva Shop
+        </Text>
+      </View>
       <Image
         source={require("../../assets/images/auth-image.png")}
         resizeMode="contain"
         className="size-96"
       />
-      {/* flex by def */}
       <View className="gap-2 mt-4">
         {/* Google button */}
         <TouchableOpacity
           onPress={() => {
             handleSocialAuth("oauth_google");
           }}
-          disabled={isloading}
+          disabled={loadingStrategy !== null}
           style={{
             shadowOffset: { width: 0, height: 2 },
             shadowColor: "#000",
@@ -36,7 +48,7 @@ const AuthScreen = () => {
           }}
           className="flex-row py-2 items-center justify-center border border-gray-300 rounded-full px-6"
         >
-          {isloading ? (
+          {loadingStrategy === "oauth_google" ? (
             <ActivityIndicator size={"small"} color={"#4285f4"} />
           ) : (
             <View className="flex-row items-center justify-center">
@@ -53,7 +65,7 @@ const AuthScreen = () => {
           onPress={() => {
             handleSocialAuth("oauth_apple");
           }}
-          disabled={isloading}
+          disabled={loadingStrategy !== null}
           style={{
             shadowOffset: { width: 0, height: 2 },
             shadowColor: "#000",
@@ -65,7 +77,7 @@ const AuthScreen = () => {
           }}
           className="flex-row py-2 items-center justify-center border border-gray-300 rounded-full px-6"
         >
-          {isloading ? (
+          {loadingStrategy === "oauth_apple" ? (
             <ActivityIndicator size={"small"} color={"#4285f4"} />
           ) : (
             <View className="flex-row items-center justify-center">
@@ -82,7 +94,7 @@ const AuthScreen = () => {
       </View>
 
       <Text className="text-center text-gray-500 leading-4 mt-6 px-2">
-        By Signup you agree to our{" "}
+        By Signup you agree to our
         <Text className="text-blue-500">
           Terms & Conditions and Privacy Policy
         </Text>
