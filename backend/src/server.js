@@ -5,7 +5,9 @@ const app = express();
 const __dirname = path.resolve();
 
 app.get("/api/health", (req, res) => {
-  res.status(200).json({ message: "server is up and running" });
+  res
+    .status(200)
+    .json({ message: "server is up and running om branch master" });
 });
 
 if (ENV.NODE_ENV === "production") {
