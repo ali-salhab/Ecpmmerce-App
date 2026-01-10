@@ -117,8 +117,10 @@ export async function getAddresses(req, res) {
 }
 
 export async function addToWishlist(req, res) {
+  console.log("add to wishlist fuction called Post methos ");
   try {
     const user = req.user;
+    console.log(user);
     const { productId } = req.body;
     const product = await Product.findById(productId);
     if (!product) {
@@ -131,7 +133,10 @@ export async function addToWishlist(req, res) {
 
     user.wishlist.push(productId);
     await user.save();
-    res.status(200).json({ message: "Product added to wishlist" });
+    res.status(200).json({
+      message: "Product added to wishlist",
+      wishlist: user.wishlist,
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -139,7 +144,7 @@ export async function addToWishlist(req, res) {
 export async function removeFromWishlist(req, res) {
   try {
     const user = req.user;
-    const { productId } = req.body;
+    const { productId } = req.params;
     const product = await Product.findById(productId);
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
@@ -152,20 +157,25 @@ export async function removeFromWishlist(req, res) {
 
     user.wishlist.pull(productId);
     await user.save();
+    res.status(200).json({
+      message: "Product removed from wishlist",
+      wishlist: user.wishlist,
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 }
 export async function getWishlist(req, res) {
+  console.log("get wish list from getwishlist contrller ----------->");
   try {
     // we are using populate because whishlist is just array of product ids
-    const wishlist = await User.findById(req.user._id).populate("wishlist");
+    const userWithWishlist = await User.findById(req.user._id).populate(
+      "wishlist"
+    );
 
     res.status(200).json({
-      wishlist,
+      wishlist: userWithWishlist?.wishlist ?? [],
     });
-
-    res.status(200).json({ wishlist });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

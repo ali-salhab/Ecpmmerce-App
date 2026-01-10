@@ -28,8 +28,15 @@ app.use(
 );
 // API routes
 app.get("/api/health", (req, res) => {
-  res.status(200).json({ message: "server is up and running" });
+  console.log("health endpoint is called");
+  return res.status(200).json({ message: "server is up and running" });
 });
+app.use("/api/admin", adminRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/orders", orderRoutes);
+app.use("/api/reviews", reviewRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/cart", cartRoutes);
 
 // Serve React frontend in production
 if (ENV.NODE_ENV === "production") {
@@ -37,13 +44,6 @@ if (ENV.NODE_ENV === "production") {
   const frontendPath = path.join(__dirname, "../admin/dist");
   // console.log(frontendPath);
   app.use(express.static(frontendPath));
-
-  app.use("/api/admin", adminRoutes);
-  app.use("/api/users", userRoutes);
-  app.use("/api/orders", orderRoutes);
-  app.use("/api/reviews", reviewRoutes);
-  app.use("/api/products", productRoutes);
-  app.use("/api/cart", cartRoutes);
 
   // SPA fallback for Express 5
   // console.log(path.join(__dirname, "../admin", "dist", "index.html"));

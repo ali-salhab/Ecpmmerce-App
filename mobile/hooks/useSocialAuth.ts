@@ -1,5 +1,5 @@
 import { useSSO } from "@clerk/clerk-expo";
-import { use, useState } from "react";
+import { useState } from "react";
 import { Alert } from "react-native";
 
 function useSocialAuth() {

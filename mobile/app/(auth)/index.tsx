@@ -1,4 +1,5 @@
 import useSocialAuth from "@/hooks/useSocialAuth";
+import { Redirect } from "expo-router";
 import {
   Text,
   View,
@@ -12,25 +13,33 @@ const AuthScreen = () => {
   return (
     <View className="flex-1 justify-center items-center bg-white">
       {/* Logo */}
-      <View className="mb-8 items-center">
+      <View className="mb-8 items-start">
         <Text
-          className="mt-4"
+          className="mt-2"
           style={{
             fontFamily: "Montserrat-Bold", // Use a custom font loaded in your project
-            fontSize: 32,
+            fontSize: 54,
             color: "#1e293b",
-            letterSpacing: 2,
+            letterSpacing: 4,
           }}
         >
-          eva Shop
+          <Text className="font-extrabold text-4xl bg-primary rounded-lg border-separate text-white">
+            Eva
+          </Text>
+          ShoW
         </Text>
       </View>
       <Image
         source={require("../../assets/images/auth-image.png")}
-        resizeMode="contain"
+        resizeMode="cover"
+        width={300}
+        height={300}
         className="size-96"
       />
-      <View className="gap-2 mt-4">
+      <TouchableOpacity onPress={() => <Redirect href={"/(tabs)"} />}>
+        <Text>press</Text>
+      </TouchableOpacity>
+      <View className="gap-2 mt-12">
         {/* Google button */}
         <TouchableOpacity
           onPress={() => {
@@ -55,6 +64,7 @@ const AuthScreen = () => {
               <Image
                 source={require("../../assets/images/google.png")}
                 className="w-7 h-7 mr-2"
+                resizeMode="contain"
               />
               <Text>Continue with google </Text>
             </View>
@@ -83,7 +93,8 @@ const AuthScreen = () => {
             <View className="flex-row items-center justify-center">
               <Image
                 source={require("../../assets/images/apple.png")}
-                className="w-7 h-7 mr-2"
+                className="w-6 h-6 mr-2"
+                resizeMode="contain"
               />
               <Text className="text-black font-medium text-base">
                 Continue with apple

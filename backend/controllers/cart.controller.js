@@ -20,6 +20,7 @@ export async function getCart(req, res) {
   }
 }
 export async function addToCart(req, res) {
+  console.log("calling Api endpoi /cart with post to add to cart");
   try {
     const { productId, quantity = 1 } = req.body;
     const user = req.user;

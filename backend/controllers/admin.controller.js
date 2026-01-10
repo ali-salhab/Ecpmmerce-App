@@ -2,7 +2,7 @@ import { Product } from "../models/product.models.js";
 import cloudinary from "../config/cloudinary.js";
 import { Order } from "../models/order.model.js";
 import { User } from "../models/user.model.js";
-import { Product } from "./../models/product.models";
+
 export async function createProduct(req, res) {
   console.log("create prodct function");
   try {
@@ -53,6 +53,7 @@ export async function createProduct(req, res) {
   }
 }
 export async function getAllProducts(_, res) {
+  console.log("get all prodcuts finction a");
   try {
     // -1 desc order
     const products = await Product.find().sort({ createdAt: -1 });

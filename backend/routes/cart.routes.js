@@ -9,7 +9,7 @@ import {
   clearCart,
 } from "../controllers/cart.controller.js";
 
-router.use(protectRoute);
+// router.use(protectRoute);
 
 // Mock cart controller functions
 router.get("/", getCart);
