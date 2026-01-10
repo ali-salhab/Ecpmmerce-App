@@ -51,6 +51,7 @@ if (ENV.NODE_ENV === "production") {
     // this work correctly
     res.sendFile(path.join(__dirname, "../admin", "dist", "index.html"));
   });
+  // ...
 }
 
 const startServer = async () => {
