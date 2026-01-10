@@ -2,7 +2,7 @@ import express from "express";
 import path from "path";
 import { ENV } from "../config/env.js";
 import { connectDB } from "../config/db.js";
-import { clerkMiddleware } from "@clerk/express";
+import { clerkMiddleware, User } from "@clerk/express";
 import { serve } from "inngest/express";
 import adminRoutes from "../routes/admin.routes.js";
 import userRoutes from "../routes/user.routes.js";
@@ -12,6 +12,7 @@ import reviewRoutes from "../routes/review.routes.js";
 import orderRoutes from "../routes/order.routes.js";
 import cartRoutes from "../routes/cart.routes.js";
 import cors from "cors";
+import { User } from "../models/user.model.js";
 const app = express();
 const __dirname = path.resolve();
 app.use(express.json());
@@ -29,6 +30,12 @@ app.use(
 // API routes
 app.get("/api/health", (req, res) => {
   console.log("health endpoint is called");
+  return res.status(200).json({ message: "server is up and running" });
+});
+app.get("/api/users", (req, res) => {
+  console.log("test endpoint is called");
+  const data = User.find();
+  console.log(data);
   return res.status(200).json({ message: "server is up and running" });
 });
 app.use("/api/admin", adminRoutes);
