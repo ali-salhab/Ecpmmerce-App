@@ -10,11 +10,27 @@ export const productApi = {
     return response.data;
   },
   create: async (formData) => {
-    const response = await axiosInstance.post("/admin/products", formData);
+    console.log("Product create api was called");
+    console.log(formData);
+    // we reach backend successfully but no response returned.
+    const response = await axiosInstance.post("/admin/products", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log(response, "<----------------------");
     return response.data;
   },
   update: async (id, formData) => {
-    const response = await axiosInstance.put(`/admin/products/${id}`, formData);
+    const response = await axiosInstance.put(
+      `/admin/products/${id}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
     return response.data;
   },
   delete: async (id) => {

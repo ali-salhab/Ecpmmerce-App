@@ -43,7 +43,7 @@ function ProductsPage() {
   });
 
   const updateProductMutation = useMutation({
-    mutationFn: productApi.update,
+    mutationFn: ({ id, formData }) => productApi.update(id, formData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
       closeModal();
@@ -97,6 +97,7 @@ function ProductsPage() {
   };
 
   const handleSubmit = (e) => {
+    console.log("handle submit button fom add product modal was called");
     e.preventDefault();
 
     if (!editingProduct && imagePreviews.length === 0) {
@@ -105,18 +106,26 @@ function ProductsPage() {
     }
 
     const payload = new FormData();
+    console.log("enteried form data ", formData);
+    // object entries will convert it to array of arrays with key and values
+
     Object.entries(formData).forEach(([key, value]) =>
       payload.append(key, value)
     );
+    console.log(images);
 
     images.forEach((img) => payload.append("images", img));
-
+    console.log("images----------->", images);
     if (editingProduct) {
       updateProductMutation.mutate({
         id: editingProduct.id,
         formData: payload,
       });
     } else {
+      console.log("payload ------------------->");
+      console.log([...payload.entries()]);
+      
+
       createProductMutation.mutate(payload);
     }
   };

@@ -4,9 +4,10 @@ import { Order } from "../models/order.model.js";
 import { User } from "../models/user.model.js";
 
 export async function createProduct(req, res) {
-  console.log("create prodct function");
+  console.log("create product function");
   try {
     const { name, description, price, stock, category } = req.body;
+    console.log(req.body);
     if (!name || !description || !price || !stock || !category) {
       return res.status(400).json({
         message: "All Fields are required",
@@ -16,6 +17,7 @@ export async function createProduct(req, res) {
     }
 
     if (!req.files || req.files.length === 0) {
+      console.log("file 0");
       return res.status(400).json({
         message: "At least one image is required",
       });
@@ -53,7 +55,7 @@ export async function createProduct(req, res) {
   }
 }
 export async function getAllProducts(_, res) {
-  console.log("get all prodcuts finction a");
+  console.log("get all prodcuts fuction called");
   try {
     // -1 desc order
     const products = await Product.find().sort({ createdAt: -1 });
