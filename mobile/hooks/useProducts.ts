@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
 
 const useProducts = (api: AxiosInstance) => {
+  console.log("useProducts called");
   const res = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
